@@ -10,7 +10,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 public class UserStoreConfig {
     @Bean
     public UserDetailsService userDetailsService() {
-        var userDetailsManager = new InMemoryUserDetailsManager(); // Estratégia de consulta de usuários em memória, mas podemos configurar este Bean para consulta de usuários no banco de dados
+        var userDetailsManager = new InMemoryUserDetailsManager(); // By default, the strategy retrieves users from memory, but we can configure this Bean to fetch user details from a database
         userDetailsManager.createUser(User.withUsername("user").password("{noop}password").roles("USER").build());
         return userDetailsManager;
     }

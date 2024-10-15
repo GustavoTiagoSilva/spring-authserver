@@ -12,12 +12,11 @@ import org.springframework.security.oauth2.server.authorization.settings.ClientS
 
 import java.util.UUID;
 
-/*
- * Classe responsável por configurar o registro de clients habilitados a acessar os recursos da aplicação * */
+/* Class responsible for configuring the registration of clients authorized to access the application's resources.*/
 @Configuration
 public class ClientStoreConfig {
 
-    // O Bean abaixo é responsável por definir como os clients vão ser registrados. Podemos usar estratégias diferentes para este cadastro. Neste exemplo, vamos utilizar estratégia de armazenamento em meoória
+    // The Bean below is responsible for defining how clients will be registered. We can use different strategies for this registration. In this example, we will use an in-memory storage strategy.
     @Bean
     public RegisteredClientRepository registeredClientRepository() {
 
@@ -27,7 +26,7 @@ public class ClientStoreConfig {
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
-                .redirectUri("http://localhost:8080/login/oauth2/code/client-server-oidc") // Informando a URI da aplicação cliente que deve receber o Code gerado necessário para pedir o access token
+                .redirectUri("http://localhost:8080/login/oauth2/code/client-server-oidc") // Specifying the client application's URI that will receive the generated Code, which is necessary to request the access token.
                 .scope(OidcScopes.OPENID)
                 .scope(OidcScopes.PROFILE)
                 .clientSettings(

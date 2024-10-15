@@ -7,7 +7,7 @@ import org.springframework.security.oauth2.server.authorization.settings.Authori
 @Configuration
 public class AuthorizationServerConfig {
 
-    // 1. Este bean vai ser responsavel por aplicar as configuracoes que queremos no AuthorizationServer
+    // This Bean will be responsible for applying the configurations we want in the Authorization Server.
     @Bean
     public AuthorizationServerSettings authorizationServerSettings() {
         return AuthorizationServerSettings.builder().build();

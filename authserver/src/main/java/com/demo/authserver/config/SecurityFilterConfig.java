@@ -14,27 +14,27 @@ import org.springframework.security.web.authentication.LoginUrlAuthenticationEnt
 public class SecurityFilterConfig {
 
     /*
-        1. A arquitetura do Spring Security foi desenhada seguindo a ideia de "Filtros". Filtros interceptam
-        as requisições enviadas pelo cliente e executam validações customizadas configuradas pelo desenvolvedor da
-        aplicação.
+        1. The architecture of Spring Security is built around the concept of "Filters." These filters intercept client
+        requests and execute custom validations configured by the application developer.
 
-        2. A Classe SecurityConfig é uma classe que foi criada para centralizar todas as configurações de segurança
-        que o AuthorizationServer precisa seguir
+        2. The `SecurityConfig` class was created to centralize all the security configurations required by the
+        Authorization Server.
+
      */
 
     @Bean
     @Order(1)
     public SecurityFilterChain authServerSecurityFilterChain(HttpSecurity http) throws Exception {
-        // 1. Ativando as configurações básicas do OAuth para serem suportadas pelo servidor de autorização
+        // 1. Enabling the basic OAuth configurations to be supported by the authorization server.
         OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
 
-        // 2. Habilitar o OpenID para termos o fluxo de autenticação contemplado
+        // 2. Enabling OpenID to include the authentication flow.
         http.getConfigurer(OAuth2AuthorizationServerConfigurer.class).oidc(Customizer.withDefaults()); // 2.1 Habilitando o OpenID Connect com seus valores padrão
 
-        // 3. Caso o usuário não esteja autenticado, irá ser direcionado por padrão para a rota /login (OIDC).oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
+        // 3. If the user is not authenticated, they will be automatically redirected to the `/login` route (OIDC).
         http.exceptionHandling(exceptions -> exceptions.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login")));
 
-        // 4. Informando o tipo de token
+        // 4. Specifying the token type.
         http.oauth2ResourceServer(oauth2 -> {
             oauth2.jwt(Customizer.withDefaults());
         });
@@ -43,17 +43,17 @@ public class SecurityFilterConfig {
     }
 
     /*
-    * O Bean definido acima diz respeito as configurações específicas do OAuth.
-    * Uma delas é justamente redirecionar para a rota de login caso a requisicção não esteja autenticada.
-    * Porém, ali informamos apenas o que precisa ocorrer caso uma excecção ocorra, mas precisamos agora definir esse tipo de exceção.
-    * Por isso, criamos o Bean padrão abaixo. Ele centraliza todas as configuraçoões padrão
-    *
-    * */
+        The Bean defined above handles the specific configurations for OAuth.
+        One of these configurations is redirecting to the login route if the request is unauthenticated.
+        However, the previous Bean only specifies what should happen if an exception occurs,
+        but we still need to define the type of exception.
+        That's why we create the default Bean below, which centralizes all types of standard configurations.
+    */
 
     @Bean
     @Order(2)
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-        // Qualquer requisição deve ser autenticada
+        // Every request must be authenticated.
         http.authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated());
         http.formLogin(Customizer.withDefaults());
         return http.build();

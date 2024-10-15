@@ -19,10 +19,9 @@ import java.util.UUID;
 @Configuration
 public class TokenStoreConfig {
 
-    /* 1. JwkSource encapsula um par de chaves (pública e privada). Essas chaves são usadas para assinar o token.
-    *  2. Como estamos definindo um Bean para essa geração de chaves, toda vez que a aplicação iniciar, um novo par de cahves é gerado,
-    * porém, temos como alternativa externalizar essas chaves em arquivos de configuração
-    * 3. Com o JwkSource conseguimos decodificar os tokens corretamente
+    /* 1. 'JwkSource' encapsulates a key pair (public and private). These keys are used to sign the token.
+     * 2. Since we are defining a Bean for key generation, a new key pair is generated every time the application starts. However, as an alternative, these keys can be externalized in configuration files.
+     * 3. With 'JwkSource'`, we can correctly decode the tokens.
     * */
 
     @Bean
