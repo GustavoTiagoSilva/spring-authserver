@@ -1,0 +1,10 @@
+server:
+  port: 9090
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: "http://localhost:9000" ## URL do Authorization Server, porque o RS precisa perguntar pra ele como decodificar o otken
+  application:
+    name: resource-server
