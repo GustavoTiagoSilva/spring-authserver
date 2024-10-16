@@ -10,6 +10,8 @@ Before diving into the flow of the application, it's important to understand som
 
 - **OAuth 2.0 Goal**: OAuth allows third-party applications to have limited access to resources hosted by another application.
 
+------
+
 ### Key Roles in OAuth 2.0:
 - **Resource Owner**: The user who wants to access the resource.
 - **Client**: The application requesting access on behalf of the user.
